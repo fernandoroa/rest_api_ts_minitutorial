@@ -26,3 +26,24 @@ export const listBooks = async (): Promise<BookRead[]> => {
     },
   });
 };
+
+export const getBook = async (id: number): Promise<BookRead | null> => {
+  return db.book.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      title: true,
+      datePublished: true,
+      isFiction: true,
+      author: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+        },
+      },
+    },
+  });
+};

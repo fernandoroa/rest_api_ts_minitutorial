@@ -14,3 +14,16 @@ bookRouter.get("/", async (request: Request, response: Response) => {
     return response.status(500).json(error.message);
   }
 });
+
+bookRouter.get("/:id", async (request: Request, response: Response) => {
+  const id: number = parseInt(request.params.id, 10);
+  try {
+    const book = await BookService.getBook(id);
+    if (book) {
+      return response.status(200).json(book);
+    }
+    return response.status(404).json("Book not found");
+  } catch (error: any) {
+    return response.status(500).json(error.message);
+  }
+});
