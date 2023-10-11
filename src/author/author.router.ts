@@ -14,3 +14,16 @@ authorRouter.get("/", async (request: Request, response: Response) => {
     return response.status(500).json(error.message);
   }
 });
+
+authorRouter.get("/:id", async (request: Request, response: Response) => {
+  const id: number = parseInt(request.params.id, 10);
+  try {
+    const author = await AuthorService.getAuthor(id);
+    if (author) {
+      return response.status(200).json(author);
+    }
+    return response.status(404).json("Author not found");
+  } catch (error: any) {
+    return response.status(500).json(error.message);
+  }
+});
