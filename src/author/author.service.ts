@@ -28,3 +28,19 @@ export const getAuthor = async (id: number): Promise<Author | null> => {
     },
   });
 };
+
+export const createAuthor = async (author: Omit<Author, "id">): Promise<Author> => {
+  const { firstName, lastName } = author;
+  return db.author.create({
+    data: {
+      firstName,
+      lastName,
+    },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+    },
+  });
+};
+
