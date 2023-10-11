@@ -66,3 +66,13 @@ authorRouter.put(
     }
   }
 );
+
+authorRouter.delete("/:id", async (request: Request, response: Response) => {
+  const id: number = parseInt(request.params.id, 10);
+  try {
+    await AuthorService.deleteAuthor(id);
+    return response.status(204).json("Author deleted with success");
+  } catch (error: any) {
+    return response.status(500).json(error.message);
+  }
+});
